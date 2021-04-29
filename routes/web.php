@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
+
+Route::get('/', 'App\Http\Controllers\BlogPostController@lastfive');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,25 +33,33 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/admin', function () {
+        return view('blogposts.admin');
+    });
+
+
 
     //  GET so just show the form
     Route::get('create-post', 'App\Http\Controllers\BlogPostController@create');
     
     //  POST so STORE the data to the DB
-    Route::post('create-post', 'App\Http\Controllers\BlogPostController@store');
+    Route::post('create-post', 'App\Http\Controllers\BlogPostController@save');
+
+    //  POST so UPDATE the data to the DB
+   Route::post('update-post', 'App\Http\Controllers\BlogPostController@update');
     // edit post form
 
     // edit an existing page
-    Route::get('edit/{slug}', 'App\Http\Controllers\BlogPostController@edit');
+    Route::get('edit/{id}', 'App\Http\Controllers\BlogPostController@edit');
 
     // update post
-    Route::post('update', 'App\Http\Controllers\BlogPostController@update');
+    // Route::post('update', 'App\Http\Controllers\BlogPostController@update');
     // delete post
     Route::get('delete/{id}', 'App\Http\Controllers\BlogPostController@destroy');
     
   });
 
-
+Route::get('/show-all', 'App\Http\Controllers\BlogPostController@allPosts');
 Route::get('/home', 'App\Http\Controllers\BlogPostController@lastfive');
 // Route::get('/make', 'App\Http\Controllers\BlogPostsController@makeABlogPost');
 // Route::post('/new-blogpost', 'App\Http\Controllers\BlogPostsController@store');

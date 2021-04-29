@@ -7,34 +7,46 @@ Add New Post
 @endsection --}}
 
 @section('content')
-<center>
-<form id="create-post" action="/create-post" method="post" enctype="multipart/form-data">
 
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<div id="form-wrap" class="flex justify-center">
+    <form id="create-post" action="/create-post" method="post" enctype="multipart/form-data" class="max-w-2xl w-full m-6">
 
-    <div class="form-group">
-        <input required="required" value="{{ old('title') }}" placeholder="Enter title here" type="text" name = "title" class="form-control" />
-    </div>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <div id="editor" class="form-group">
-
-        content here
-
-
-    </div>
-
-    <div class="form-group row">
-        <label for="gameimageid" class="col-sm-3 col-form-label">Thumbnail Image</label>
-        <div class="col-sm-9">
-            <input name="image" type="file" id="gameimageid" class="custom-file-input">
-            <span style="margin-left: 15px; width: 480px;" class="custom-file-control"></span>
+        <h1 class="text-2xl text-blue-800 mb-7">Let's create a Post!</h1>
+        <div class="form-group mb-5">
+            <input required="required" value="{{ old('title') }}" placeholder="Post Title" type="text" name ="title" class="form-control" />
         </div>
-    </div>
 
-    <input type="hidden" name="body"/>
-    <input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
+        <div id="editor" class="form-group  mb-5 bg-white" >
+
+            content here
 
 
-</form>
-</center>
+        </div>
+
+        
+        <label for="gameimageid" class="py-2 block">Attach an image ...</label>
+        <input name="image" required="required" title=" " type="file" id="gameimageid" accept=".jpg, .jpeg, .png" class="w-full font-bold bg-white rounded ">
+       
+ 
+
+        <input type="hidden" name="body"/>
+       
+        <div class="flex justify-end">
+            <input type="submit" name='publish' class="mt-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" value="Publish"/>
+        </div>
+
+
+    </form>
+
+    {{-- <div>
+        <h1>Quill HTML</h1>
+        <div id="quillhtml"></div>
+        <button id="htmlit">yeah</button>
+    </div> --}}
+</div>
+
+
+
 @endsection

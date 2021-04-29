@@ -21,14 +21,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        
-                </div>
-            </header>
+            @include('layouts.header') 
 
             <!-- Page Content -->
             <main>
@@ -46,11 +39,22 @@
             theme: 'snow'
         });
 
+        
+        // document.getElementById("htmlit").onclick = function() {showHTML()};
+    
+    /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
+        function showHTML() {
+
+            var html = quill.root.innerHTML;
+            document.getElementById("quillhtml").innerHTML = html;
+        }
+
         var form = document.getElementById("create-post"); // get form by ID
 
             form.onsubmit = function() { // onsubmit do this first
-                var name = document.querySelector('input[name=body]'); // set name input var
-                name.value = JSON.stringify(quill.getContents()); // populate name input with quill data
+                var name = document.querySelector('input[name=body]'); // lets get our hidden field
+                name.value = quill.root.innerHTML;
+                //name.value = JSON.stringify(quill.getContents()); // populate name input with quill data
                 return true; // submit form
             }
         </script>

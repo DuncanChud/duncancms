@@ -25,16 +25,8 @@ class BlogPostController extends Controller
     }
 
 
-    // edit an existing post
-    // public function edit(Request $request,$slug)
-    // {
-    //     $post = BlogPosts::where('slug',$slug)->first();
-    //     if($post && ($request->user()->id == $post->author_id || $request->user()->is_admin()))
-    //     return view('blogposts.edit')->with('post',$post);
-    //     return redirect('/')->withErrors('you have not sufficient permissions');
-    // }
-
-    public function store(Request $request)
+    // save our new post to the DB
+    public function save(Request $request)
     {
 
       $validatedData = $request->validate([
@@ -53,25 +45,79 @@ class BlogPostController extends Controller
       $post->save();
   
 
-      // $duplicate = BlogPosts::where('slug', $post->slug)->first();
-      // if ($duplicate) {
-      //   return redirect('new-post')->withErrors('Title already exists.')->withInput();
-      // }
+      $duplicate = BlogPosts::where('slug', $post->slug)->first();
+      if ($duplicate) {
+        return redirect('/')->withErrors('Title already exists.')->withInput();
+      }
 
       
       return redirect($post->slug);
     }
 
 
+    public function update(Request $request)
+    {
+
+      $post_id = $request->get('post_id');
+      Log::debug("------------in db update -------------------");
+      Log::debug("------------ $post_id -------------------");
+
+
+        $post =   BlogPosts::find($post_id);
+        Log::debug("------------ $post->title ---- ");
+        Log::debug("------------ $post->body ---- ");
+
+
+
+      if(!$post)
+      {
+        Log::debug("------------ coudnt find post id to update  -------------------");
+        return redirect('/')->withErrors('requested page not found');
+      } else {
+        Log::debug("------------ YES post to update  -------------------");
+        $post->title = $request->get('title');
+        $post->body = $request->get('body');
+        $post->slug = Str::slug($post->title); // automatically slugifies ....
+        $post->is_active = true;
+        $post->author_id = $request->user()->id;
+        $post->image_path = request()->file('image')->store('public/images');
+        $post->save();
+      }      
+      return redirect($post->slug);
+    }
+
+
     public function show($slug)
     {
-        $post = BlogPosts::where('slug',$slug)->first();
-        if(!$post)
-        {
-          return redirect('/')->withErrors('requested page not found');
-        }
 
-        return view('blogposts.show')->withPost($post);
+      $five_posts = BlogPosts::with(['user'])->where('is_active',1)->orderBy('created_at','desc')->paginate(5);
+
+      $post = BlogPosts::where('slug',$slug)->first();
+      if(!$post)
+      {
+        return redirect('/')->withErrors('requested page not found');
+      }
+
+      return view('blogposts.show')->withPost($post)->withFiveposts($five_posts);
+
+    }
+
+    public function edit($id)
+    {
+      $post = BlogPosts::where('id',$id)->first();
+      //$post = BlogPosts::where('slug',$slug)->first();
+
+      Log::debug("--------------------in edit-------------------------");
+      Log::debug("found post id $id");
+      Log::debug("title $post->slug");
+      Log::debug("--------------------going to edit form -------------------------");
+      if(!$post)
+      {
+        return redirect('/')->withErrors('requested page not found');
+      }
+      
+
+      return view('blogposts.edit')->withPost($post);
     }
 
 
@@ -81,21 +127,22 @@ class BlogPostController extends Controller
       $posts = BlogPosts::with(['user'])->where('is_active',1)->orderBy('created_at','desc')->paginate(5);
 
 
-     //$posts = BlogPosts::all();
-
-     // $posts = DB::table('blogposts')->get();
-
-      //Flight::all()
-
       //page heading
       $title = 'Latest Posts';
-      //return home.blade.php template from resources/views folder
-     // return view('home')->withPosts($posts)->withTitle($title);
-     //return view('home')->withTitle($title);
-     return view('home')->withPosts($posts);
+
+     return view('home')->withFiveposts($posts);
     }
 
 
+    public function allPosts()
+    {
+      // Grab all  posts
+      $posts = BlogPosts::with(['user'])->where('is_active',1)->orderBy('created_at','desc')->get();
+      return view('all')->withPosts($posts);
+    }
+
+
+    // just seed something quick
     public function makeABlogPost()
     {
        Log::debug("make a blog post");
