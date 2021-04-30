@@ -4,7 +4,7 @@
 @endsection --}}
 @section('sidebar')
 
-  @include('layouts.sidebar');
+  @include('layouts.sidebar')
 
   
 @endsection
@@ -34,9 +34,10 @@
   <h3 class="my-3 font-bold">Where might you apply caching to avoid overwhelming the database during high traffic?</h3>
   <p  class="py-3">Static assets can be cached in a CDN, data driven performance could be beefed up by throwing an in memory cache at it like memcached or redis.  You would retool some code for cache invalidation, etc. Alternately you can scale horizontally if you have cloud-based auto scaling servers / container services behind a load balancer.  Spin up time still takes a few minutes per onboarded node, but the upside is this is a more or less infinitely scalable solution.</p>
   <h3 class="my-3 font-bold">Expand the admin tool to allow updates of posts and deleting posts.</h3>
-  <p  class="py-3">I threw in a couple additional routes / pages for 1) updating existing pages and 2) Viewing a master list of ALL pages in the system.</p>
+  <p  class="py-3">I threw in a couple additional routes / pages for 1) editing existing pages (must be logged in and on details page) and 2) Viewing a master list of <a class="text-blue-500 underline" href="/show-all">All</a> pages in the system.</p>
   <h3 class="my-3 font-bold">Allow uploading of a high-resolution image to be displayed on the article page that is automatically resized for the home page thumbnail.</h3>
-  <p  class="py-3">Right now I'm accepting in and displaying the uploaded assets as original size within the limits of the responsive container it lives in.  If you go to edit an existing page though you will see a thumbnailified version of the item you are replacing.  (This is css container fitting, not running through a true image resizer).</p>
+  <p  class="py-3">Right now I'm accepting in and displaying the uploaded assets responsively but large-ish on the blog details page.  If you visit the <a class="text-blue-500 underline" href="/show-all">Show All</a> page, you will see the images further thumbnailed.
+    (This is css container fitting, not running through a true image resizer).</p>
 
     
 </div>

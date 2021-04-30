@@ -24,6 +24,7 @@
         <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
           <span class="font-semibold title-font text-gray-700">{{ $thispost->user->name}}</span>
           <span class="mt-1 text-gray-500 text-sm">{{ $thispost->created_at->format('M d,Y \a\t h:i a') }}</span>
+          <img class="my-6 w-1/3" src="{{ Storage::url($thispost->image_path)  }}" >
         </div>
         <div class="md:flex-grow">
           <h2 class="text-2xl font-medium text-gray-900 title-font mb-2">{{ $thispost->title }}</h2>

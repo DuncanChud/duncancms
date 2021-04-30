@@ -28,5 +28,4 @@
         <p><a class="text-xl underline font-extrabold text-blue-700 mb-2 "href="/show-all">See ALL posts...</a></p>
     @endif 
     </div>
-
 @endif

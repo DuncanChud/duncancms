@@ -2,8 +2,7 @@
 
 
 @section('sidebar')
-  @include('layouts.sidebar');
-  
+  @include('layouts.sidebar')
 @endsection
 
 @section('content')
@@ -36,7 +35,7 @@
 		<!--Divider-->
 		<hr class="border-b-2 border-gray-400 mb-8 mx-4">
 
-    <img class="my-6" src="{{ Storage::url($post->image_path)  }}" >
+    <img class="my-6 mx-auto w-1/3" src="{{ Storage::url($post->image_path)  }}" >
 	
 
 		<!--/Next & Prev Links-->

@@ -24,14 +24,14 @@
 
             <div id="main-wrapper" class="my-0 mx-auto h-screen ">
                 <!-- Page Content -->
-                <main class="flex flex-wrap flex-row max-w-5xl bg-gray-100 justify-items-start items-stretch my-0 mx-auto">
-                    {{-- {{ $slot }} --}}
-                    <div id="sidebar" class="min-w-0 w-64 h-full">
-                        @yield('sidebar')
-                    </div>
+                <main class="flex flex-wrap flex-row max-w-5xl bg-white  my-0 mx-auto">
 
-                    <div id="body" class=" flex-grow flex-1 h-full w-auto ">
-   
+                    <div id="sidebar" class="w-full order-2 sm:order-1 sm:w-1/3 flex-grow border bg-gray-100 border-gray-300">
+                        @yield('sidebar')
+                    </div><!-- end sidebar -->
+
+                
+                    <div id="body" class="w-full order-1 sm:order-2 sm:w-2/3 border border-gray-300 ">
                         @yield('content')
                     </div>
                     

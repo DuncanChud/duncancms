@@ -23,12 +23,18 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.header') 
 
+            <div id="main-wrapper" class="my-0 mx-auto  border  border-gray-300">
             <!-- Page Content -->
-            <main>
-                {{-- {{ $slot }} --}}
-                @yield('title')<br/>
-                @yield('content')
-            </main>
+                <main class="flex flex-wrap flex-row max-w-5xl bg-white  h-screen my-0 mx-auto">
+                    <div id="body" class="w-full border border-gray-300 ">
+                        @yield('title')<br/>
+                        @yield('content')
+                    </div>
+                    @yield('title')<br/>
+            
+                    
+                </main>
+            </div>
         </div>
         <!-- Include the Quill library -->
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
